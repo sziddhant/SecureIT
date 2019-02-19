@@ -1,8 +1,9 @@
 from flask import Flask
-
+from otp import *
 app = Flask(__name__)
 
-
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
+print (generate_otp())
+@app.route('/otp')
+def run():
+    x= generate_otp()
+    return x
