@@ -11,6 +11,9 @@ app = Flask(__name__)
 
 
 
+@app.route('/camera')
+def cam():
+    return redirect("http://192.168.2.104:8081", code=302)
 
 @app.route('/a')
 def welcome():
@@ -30,7 +33,7 @@ def home():
         return render_template('login.html')
 
     else:
-        return 'Hello ! <br> <a href=" / logout">Logout</a><br> <a href=" /otp">Generate OTP</a>'
+        return 'Hello ! <br> <a href=" / logout">Logout</a><br> <a href=" /otp">Generate OTP</a> <br> <a href=" /camera">Camera</a>'
 
 
 @app.route('/login', methods=['POST'])
@@ -45,7 +48,11 @@ def do_admin_login():
     query = s.query(User).filter(User.username.in_([POST_USERNAME]), User.password.in_([POST_PASSWORD]))
     result = query.first()
     if result:
+
         session['logged_in'] = True
+        login_log_file = open('login_log.txt', 'a+')
+        login_log_file.write('%s  \n'%POST_USERNAME)
+        login_log_file.close()
     else:
         flash('wrong password!')
     return home()
