@@ -51,7 +51,7 @@ def do_admin_login():
 
         session['logged_in'] = True
         login_log_file = open('login_log.txt', 'a+')
-        login_log_file.write('%s  \n'%POST_USERNAME)
+        login_log_file.write('%s  \n'   %POST_USERNAME)
         login_log_file.close()
     else:
         flash('wrong password!')
