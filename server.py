@@ -6,14 +6,13 @@ from tabledef import *
 from input import *
 engine = create_engine('sqlite:///credential.db', echo=True)
 from otp import *
-
+x=0
 app = Flask(__name__)
-
 
 
 @app.route('/camera')
 def cam():
-    return redirect("http://192.168.2.104:8081", code=302)
+    return redirect("http://192.168.2.102:8081", code=302)
 
 @app.route('/a')
 def welcome():
@@ -22,10 +21,15 @@ def welcome():
 
 @app.route('/otp')
 def run():
-    x = generate_otp()
-    pass_verify(x)
-    return str(x)
+    global x
+    x= generate_otp()
+    return str(x)+'<br> <a href=" /c">Enter OTP</a><br>'
 
+@app.route('/c')
+def run2():
+    pass_verify(x)
+
+    return 'Welcome!'
 
 @app.route('/')
 def home():
