@@ -5,6 +5,7 @@ import board
 import adafruit_matrixkeypad
 import RPi.GPIO as GPIO
 import time
+import urllib.request
 cols = [digitalio.DigitalInOut(x) for x in (board.D26, board.D20, board.D21)]
 rows = [digitalio.DigitalInOut(x) for x in (board.D5, board.D6, board.D13, board.D19)]
 
@@ -28,16 +29,12 @@ def open_door():
     servoPIN = 17
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(servoPIN, GPIO.OUT)
-
     p = GPIO.PWM(servoPIN, 50)  # GPIO 17 for PWM with 50Hz
     p.start(2.5)
-    try:
-        p.ChangeDutyCycle(7.5)
-        time.sleep(1)
-        p.ChangeDutyCycle(0)
-    except KeyboardInterrupt:
-        p.stop()
-        GPIO.cleanup()
+
+    k= urllib.request.urlopen("http://192.168.2.102/OPEN")
+    print('OPENED!')
+
     print('Welcome!')
     return
 

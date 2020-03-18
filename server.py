@@ -3,6 +3,7 @@ from flask import Flask, flash, redirect, render_template, request, session, abo
 import os
 from sqlalchemy.orm import sessionmaker
 from tabledef import *
+import requests
 from input import *
 engine = create_engine('sqlite:///credential.db', echo=True)
 from otp import *
@@ -12,7 +13,7 @@ app = Flask(__name__)
 
 @app.route('/camera')
 def cam():
-    return redirect("http://192.168.2.102:8081", code=302)
+    return redirect("http://192.168.2.104:8081", code=302)
 
 @app.route('/a')
 def welcome():
